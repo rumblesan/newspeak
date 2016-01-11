@@ -1,4 +1,5 @@
 include_directories(include)
+include_directories(../collections/include)
 
 find_package(BISON 3.0)
 find_package(FLEX 2.5)
@@ -10,8 +11,12 @@ flex_target(NSLexer
 )
 add_flex_bison_dependency(NSLexer NSParser)
 
+file(GLOB_RECURSE SOURCES "src/*.c")
+
 add_executable(newspeak
+    ${SOURCES}
     ${BISON_NSParser_OUTPUTS}
     ${FLEX_NSLexer_OUTPUTS}
 )
 
+target_link_libraries(newspeak newspeak-collections)
