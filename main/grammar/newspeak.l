@@ -1,0 +1,22 @@
+%{
+#include "y.tab.h"
+%}
+
+%option 8bit reentrant bison-bridge
+%option nounput noinput
+%option warn noyywrap
+
+%%
+
+"def"                         return DEFINE;
+
+"("                           return OPAREN;
+")"                           return CPAREN;
+"["                           return OPAREN;
+"]"                           return CPAREN;
+
+[0-9]+('.'[0-9]+)?            return NUMBER;
+[a-zA-Z]+[a-zA-Z0-9]*         return IDENTIFIER;
+
+[ \t\n]+                      /* ignore whitespace */;
+%%
