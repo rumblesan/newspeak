@@ -6,9 +6,9 @@
 typedef struct list_el *List;
 typedef struct list_el {
 
-    void head;
+    void *head;
 
-    ExpressionList tail;
+    List tail;
 
 } ListEl;
 
@@ -18,9 +18,9 @@ List list_empty();
 
 void list_cleanup(List list);
 
-List list_prepend(List list, void value);
+List list_prepend(List list, void *value);
 
-void list_head(List list);
+void *list_head(List list);
 
 List list_tail(List list);
 

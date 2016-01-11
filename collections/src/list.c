@@ -24,7 +24,7 @@ void list_cleanup(List list) {
     free(list);
 }
 
-List list_prepend(List list, void value) {
+List list_prepend(List list, void *value) {
 
     List newHead = list_element();
 
@@ -34,7 +34,7 @@ List list_prepend(List list, void value) {
     return newHead;
 }
 
-void list_head(List list) {
+void *list_head(List list) {
     return list->head;
 }
 
