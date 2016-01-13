@@ -11,4 +11,12 @@ void ast_element_print(Element element, int indentation);
 
 void ast_vardef_print(VarDefinition vardef, int indentation);
 
+void ast_application_print(Application application, int indentation);
+
+void ast_expression_print(Expression expression, int indentation);
+
+void ast_number_print(Number number, int indentation);
+
+void ast_variable_print(Variable variable, int indentation);
+
 #endif
