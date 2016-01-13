@@ -1,7 +1,9 @@
 %code requires {
 #include "ast.h"
+#include "ast-print.h"
 #include "list.h"
 }
+
 %{
 
 #include <stdio.h>
@@ -68,7 +70,9 @@ int main() {
 %%
 body: elements
     {
-        $$ = ast_block_create($1);
+        Block block = ast_block_create($1);
+        ast_print(block);
+        $$ = block;
     }
     ;
 
@@ -76,9 +80,9 @@ elements: %empty
         {
             $$ = list_empty();
         }
-        | elements element
+        | element elements
         {
-            $$ = list_empty();
+            $$ = list_prepend($2, $1);
         }
         ;
 
