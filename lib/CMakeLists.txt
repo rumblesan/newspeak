@@ -13,10 +13,10 @@ add_flex_bison_dependency(NSLexer NSParser)
 
 file(GLOB_RECURSE SOURCES "src/*.c")
 
-add_library(newspeak-parser SHARED
+add_library(newspeak-lib SHARED
     ${SOURCES}
     ${BISON_NSParser_OUTPUTS}
     ${FLEX_NSLexer_OUTPUTS}
 )
 
-target_link_libraries(newspeak-parser newspeak-collections)
+target_link_libraries(newspeak-lib newspeak-collections)
