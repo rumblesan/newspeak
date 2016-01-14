@@ -12,20 +12,27 @@
 #include "y.tab.h"
 #include "lex.yy.h"
 
-void yyerror(yyscan_t scanner, const char *str) {
+void yyerror(yyscan_t scanner, Block *ast, const char *str) {
     fprintf(stderr, "error: %s\n", str);
 }
 
 int main() {
 
     yyscan_t scanner;
+    Block ast = NULL;
 
     yylex_init(&scanner);
     yyset_in(stdin, scanner);
 
-    yyparse(scanner);
+    yyparse(scanner, &ast);
 
     yylex_destroy(scanner);
+
+    if (ast == NULL) {
+        printf("AST not returned");
+    } else {
+        printf("AST succesfully returned");
+    }
 
     return 0;
 }
@@ -36,7 +43,7 @@ int main() {
 %define parse.error verbose
 %define api.pure full
 %lex-param {void *scanner}
-%parse-param {void *scanner}
+%parse-param {void *scanner} {Block *ast}
 
 %union {
     Block         blockNode;
@@ -70,7 +77,7 @@ int main() {
 body: elements
     {
         Block block = ast_block_create($1);
-        ast_print(block);
+        *ast = block;
         $$ = block;
     }
     ;
