@@ -43,7 +43,7 @@ Element ast_vardefinition_element(VarDefinition varDefinition) {
 }
 
 /* Application AST Node */
-Application ast_application_create(char *name, ArgList args) {
+Application ast_application_create(char *name, List args) {
     Application application = malloc(sizeof(ApplicationNode));
     application->name = name;
     application->args = args;
@@ -54,19 +54,6 @@ Application ast_application_create(char *name, ArgList args) {
 void ast_application_cleanup(Application application) {
     // TODO Free up name and args
     free(application);
-}
-
-/* ArgList AST Node */
-ArgList ast_arg_list_create(List args) {
-    ArgList argList = malloc(sizeof(ArgListNode));
-    argList->args = args;
-
-    return argList;
-}
-
-void ast_arg_list_cleanup(List argList) {
-    // TODO Free up args
-    free(argList);
 }
 
 /* Variable Definition AST Node */

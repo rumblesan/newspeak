@@ -43,7 +43,7 @@ int main() {
     List          elementsNode;
     Element       elementNode;
     Application   applicationNode;
-    ArgList       argListNode;
+    List          argListNode;
     VarDefinition varDefNode;
     Expression    expressionNode;
     Number        numberNode;
@@ -101,13 +101,13 @@ application: OPAREN IDENTIFIER argList CPAREN
            }
            ;
 
-argList: argList expression
+argList: %empty
        {
-           $$ = ast_arg_list_create(list_empty());
+           $$ = list_empty();
        }
-       | expression
+       | expression argList
        {
-           $$ = ast_arg_list_create(list_empty());
+           $$ = list_prepend($2, $1);
        }
        ;
 

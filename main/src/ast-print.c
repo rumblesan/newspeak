@@ -46,15 +46,17 @@ void ast_vardef_print(VarDefinition vardef, int indentation) {
 void ast_application_print(Application application, int indentation) {
     indent(indentation);
     printf("Application: %s\n", application->name);
+    ast_arg_list_print(application->args, indentation + DEPTH);
 }
 
-void ast_arg_list_print(ArgList argList, int indentation) {
-    List args = argList->args;
+void ast_arg_list_print(List argList, int indentation) {
+    List args = argList;
+    indent(indentation);
+    printf("%d args\n", list_length(args));
     while (!list_is_empty(args)) {
         ast_expression_print((Expression)list_head(args), indentation + DEPTH);
         args = list_tail(args);
     }
-    indent(indentation);
 }
 
 void ast_expression_print(Expression expression, int indentation) {

@@ -7,7 +7,6 @@
 typedef struct blockNode         *Block;
 typedef struct elementNode       *Element;
 typedef struct applicationNode   *Application;
-typedef struct argListNode       *ArgList;
 typedef struct varDefinitionNode *VarDefinition;
 typedef struct expressionNode    *Expression;
 typedef struct numberNode        *Number;
@@ -53,24 +52,13 @@ typedef struct applicationNode {
 
     char *name;
 
-    ArgList args;
+    List args;
 
 } ApplicationNode;
 
-Application ast_application_create(char *name, ArgList args);
+Application ast_application_create(char *name, List args);
 
 void ast_application_cleanup(Application application);
-
-/* ArgList AST Node */
-typedef struct argListNode {
-
-    List args;
-
-} ArgListNode;
-
-ArgList ast_arg_list_create(List args);
-
-void ast_arg_list_cleanup(List args);
 
 /* Variable Definition AST Node */
 typedef struct varDefinitionNode {
