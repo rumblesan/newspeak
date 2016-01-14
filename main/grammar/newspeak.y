@@ -112,9 +112,9 @@ argList: argList expression
        ;
 
 
-vardefinition: OPAREN DEFINE IDENTIFIER OPAREN expression CPAREN CPAREN
+vardefinition: OPAREN DEFINE IDENTIFIER expression CPAREN
           {
-               $$ = ast_vardef_create($3, $5);
+               $$ = ast_vardef_create($3, $4);
           }
           ;
 
