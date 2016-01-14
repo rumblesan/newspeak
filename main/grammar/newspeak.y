@@ -1,6 +1,5 @@
 %code requires {
 #include "ast.h"
-#include "ast-print.h"
 #include "list.h"
 }
 
@@ -9,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "parser.h"
 #include "y.tab.h"
 #include "lex.yy.h"
 
@@ -16,27 +16,19 @@ void yyerror(yyscan_t scanner, Block *ast, const char *str) {
     fprintf(stderr, "error: %s\n", str);
 }
 
-int main() {
+int parse(Block *ast) {
 
     yyscan_t scanner;
-    Block ast = NULL;
 
     yylex_init(&scanner);
     yyset_in(stdin, scanner);
 
-    yyparse(scanner, &ast);
+    int parseResult = yyparse(scanner, ast);
 
     yylex_destroy(scanner);
 
-    if (ast == NULL) {
-        printf("AST not returned");
-    } else {
-        printf("AST succesfully returned");
-    }
-
-    return 0;
+    return parseResult;
 }
-
 
 %}
 
