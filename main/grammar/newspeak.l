@@ -15,8 +15,8 @@
 "["                           return OPAREN;
 "]"                           return CPAREN;
 
-[0-9]+('.'[0-9]+)?            return NUMBER;
-[a-zA-Z]+[a-zA-Z0-9]*         return IDENTIFIER;
+[0-9]+('.'[0-9]+)?            yylval->number = atof(yytext); return NUMBER;
+[a-zA-Z]+[a-zA-Z0-9]*         yylval->identifier = yytext; return IDENTIFIER;
 
 [ \t\n]+                      /* ignore whitespace */;
 %%

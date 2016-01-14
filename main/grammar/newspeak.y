@@ -48,7 +48,7 @@ int main() {
     Expression    expressionNode;
     Number        numberNode;
     Variable      variableNode;
-    Identifier    idNode;
+    Identifier    identifier;
     double        number;
 }
 
@@ -56,8 +56,7 @@ int main() {
 %token OPAREN
 %token CPAREN
 %token<number> NUMBER
-%token<numberNode> num
-%token<idNode> IDENTIFIER
+%token<identifier> IDENTIFIER
 %type<blockNode> body
 %type<elementsNode> elements
 %type<elementNode> element
