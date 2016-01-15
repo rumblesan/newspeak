@@ -14,7 +14,9 @@ int main(int argc, char *argv[]) {
     if (parseResult) {
         printf("Error during parsing");
     } else {
-        interpret(ast);
+        Interpreter interpreter = interpreter_create();
+        interpret(interpreter, ast);
+        interpreter_destroy(interpreter);
     }
 
     return parseResult;
