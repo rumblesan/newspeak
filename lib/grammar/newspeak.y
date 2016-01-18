@@ -1,6 +1,6 @@
 %code requires {
 #include "ast.h"
-#include "list.h"
+#include "bclib/list.h"
 }
 
 %{

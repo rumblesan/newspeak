@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 #include "ast.h"
-#include "list.h"
+#include "bclib/list.h"
 
 /* Block AST Node */
 Block ast_block_create(List elements) {

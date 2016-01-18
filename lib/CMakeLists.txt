@@ -19,4 +19,6 @@ add_library(newspeak-lib SHARED
     ${FLEX_NSLexer_OUTPUTS}
 )
 
-target_link_libraries(newspeak-lib newspeak-collections)
+find_package(BCLib REQUIRED)
+include_directories("${BCLIB_INCLUDE_DIRS}")
+target_link_libraries(newspeak-lib bclib)

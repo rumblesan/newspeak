@@ -2,7 +2,7 @@
 #define AST_DISPLAY_H
 
 #include "ast.h"
-#include "list.h"
+#include "bclib/list.h"
 
 void ast_print(Block block);
 
