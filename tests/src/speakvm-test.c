@@ -6,8 +6,7 @@
 static SpeakVM *vm;
 
 char *test_create() {
-    DArray *program = darray_create(sizeof(int), 100);
-    mu_assert(program != NULL, "darray_create failed");
+    void *program[100];
 
     vm = speak_vm_create(program);
     mu_assert(vm != NULL, "speak_vm_create failed");

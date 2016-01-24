@@ -5,39 +5,41 @@
 #include "bclib/darray.h"
 
 typedef enum {
-    NOP,   // NoOperation
-    HLT,   // Halt
-    ADD,   // Add top two elements of stack
-    SUB,   // Subtract top two elements of stack
-    MUL,   // Multiply top two elements of stack
-    DIV,   // Divide top two elements of stack
-    MOD,   // Modulus top two elements of stack
-    POW,   // Exponent top two elements of stack
-    UNM,   // Unary Minus
-    EQL,   // Equality
-    LT,    // Less than test
-    LE,    // Less than or equal test
-    EQ,    // Equality
-    LOAD,  // Load from memory to stack
-    CNST,  // Load a constant onto the stack
-    STR,   // Store the value from the stack to an address
-    JMP,   // Unconditional jump
-    IF,    // Conditional jump
-    CALL,  // Call a function
-    RTRN   // Return
+    INOP,   // NoOperation
+    IHLT,   // Halt
+    IADD,   // Add top two elements of stack
+    ISUB,   // Subtract top two elements of stack
+    IMUL,   // Multiply top two elements of stack
+    IDIV,   // Divide top two elements of stack
+    IMOD,   // Modulus top two elements of stack
+    IPOW,   // Exponent top two elements of stack
+    IUNM,   // Unary Minus
+    IEQL,   // Equality
+    ILT,    // Less than test
+    ILE,    // Less than or equal test
+    IEQ,    // Equality
+    ILOAD,  // Load from memory to stack
+    ICNST,  // Load a constant onto the stack
+    ISTOR,  // Store the value from the stack to an address
+    IJMP,   // Unconditional jump
+    IIF,    // Conditional jump
+    ICALL,  // Call a function
+    IRTRN   // Return
 } VMInstruction;
+
+typedef uint32_t Instruction;
 
 typedef struct SpeakVM {
 
     Stack *call_stack;
 
-    DArray *program;
+    void **program;
 
     unsigned long counter;
 
 } SpeakVM;
 
-SpeakVM *speak_vm_create(DArray *program);
+SpeakVM *speak_vm_create(void *program[]);
 void speak_vm_destroy(SpeakVM *vm);
 
 int speak_vm_run(SpeakVM *vm);
