@@ -3,7 +3,6 @@
 #include "parser.h"
 #include "ast.h"
 #include "ast-print.h"
-#include "interpreter.h"
 
 int main(int argc, char *argv[]) {
 
@@ -14,9 +13,7 @@ int main(int argc, char *argv[]) {
     if (parseResult) {
         printf("Error during parsing");
     } else {
-        Interpreter interpreter = interpreter_create();
-        interpret(interpreter, ast);
-        interpreter_destroy(interpreter);
+        printf("Parsed");
     }
 
     return parseResult;
