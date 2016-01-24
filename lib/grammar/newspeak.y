@@ -12,11 +12,11 @@
 #include "y.tab.h"
 #include "lex.yy.h"
 
-void yyerror(yyscan_t scanner, Block *ast, const char *str) {
+void yyerror(yyscan_t scanner, Block **ast, const char *str) {
     fprintf(stderr, "error: %s\n", str);
 }
 
-int parse(Block *ast) {
+int parse(Block **ast) {
 
     yyscan_t scanner;
 
@@ -35,19 +35,19 @@ int parse(Block *ast) {
 %define parse.error verbose
 %define api.pure full
 %lex-param {void *scanner}
-%parse-param {void *scanner} {Block *ast}
+%parse-param {void *scanner} {Block **ast}
 
 %union {
-    Block         blockNode;
-    List          elementsNode;
-    Element       elementNode;
-    Application   applicationNode;
-    List          argListNode;
-    VarDefinition varDefNode;
-    Expression    expressionNode;
-    Number        numberNode;
-    Variable      variableNode;
-    Identifier    identifier;
+    Block         *blockNode;
+    List          *elementsNode;
+    Element       *elementNode;
+    Application   *applicationNode;
+    List          *argListNode;
+    VarDefinition *varDefNode;
+    Expression    *expressionNode;
+    Number        *numberNode;
+    Variable      *variableNode;
+    Identifier    *identifier;
     double        number;
 }
 
@@ -68,7 +68,7 @@ int parse(Block *ast) {
 %%
 body: elements
     {
-        Block block = ast_block_create($1);
+        Block *block = ast_block_create($1);
         *ast = block;
         $$ = block;
     }
@@ -76,11 +76,11 @@ body: elements
 
 elements: %empty
         {
-            $$ = list_empty();
+            $$ = list_create();
         }
-        | element elements
+        | elements element
         {
-            $$ = list_prepend($2, $1);
+            $$ = list_push($1, $2);
         }
         ;
 
@@ -102,11 +102,11 @@ application: OPAREN IDENTIFIER argList CPAREN
 
 argList: %empty
        {
-           $$ = list_empty();
+           $$ = list_create();
        }
-       | expression argList
+       | argList expression
        {
-           $$ = list_prepend($2, $1);
+           $$ = list_push($1, $2);
        }
        ;
 

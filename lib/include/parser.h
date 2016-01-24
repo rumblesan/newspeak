@@ -3,6 +3,6 @@
 
 #include "ast.h"
 
-int parse(Block *ast);
+int parse(Block **ast);
 
 #endif
