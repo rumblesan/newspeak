@@ -3,122 +3,116 @@
 
 #include "bclib/list.h"
 
-/* Pointers */
-typedef struct blockNode         *Block;
-typedef struct elementNode       *Element;
-typedef struct applicationNode   *Application;
-typedef struct varDefinitionNode *VarDefinition;
-typedef struct expressionNode    *Expression;
-typedef struct numberNode        *Number;
-typedef struct variableNode      *Variable;
-typedef char                     *Identifier;
-
-/* Block AST Node */
-typedef struct blockNode {
-
-    List elements;
-
-} BlockNode;
-
-Block ast_block_create(List nodes);
-
-void ast_block_cleanup(Block block);
-
-/* Element AST Node */
-typedef enum {VARDEFINITIONEL, APPLICATIONEL} ElementNodeType;
-
-typedef struct elementNode {
-
-    ElementNodeType elementType;
-
-    union {
-        Application application;
-        VarDefinition varDefinition;
-    };
-
-} ElementNode;
-
-Element ast_element_create();
-
-void ast_element_cleanup(Element element);
-
-Element ast_application_element(Application application);
-
-Element ast_vardefinition_element(VarDefinition vardefinition);
-
-
-/* Application AST Node */
-typedef struct applicationNode {
-
-    char *name;
-
-    List args;
-
-} ApplicationNode;
-
-Application ast_application_create(char *name, List args);
-
-void ast_application_cleanup(Application application);
-
-/* Variable Definition AST Node */
-typedef struct varDefinitionNode {
-
-    char *name;
-
-    Expression expression;
-
-} VarDefinitionNode;
-
-VarDefinition ast_vardef_create(char *name, Expression expression);
-
-void ast_vardef_cleanup(VarDefinition vardef);
-
-
-/* Expression AST Node */
-typedef enum {APPLICATIONEXPR, NUMBEREXPR, VARIABLEEXPR} ExpressionNodeType;
-
-typedef struct expressionNode {
-
-    ExpressionNodeType expressionType;
-
-    union {
-        Application application;
-        Number number;
-        Variable variable;
-    };
-
-} ExpressionNode;
-
-Expression ast_expression_create();
-
-void ast_expression_cleanup(Expression expression);
-
-Expression ast_application_expression(Application application);
-
-Expression ast_number_expression(Number number);
-
-Expression ast_variable_expression(Variable variable);
+typedef char Identifier;
 
 /* Number Literal AST Node */
-typedef struct numberNode {
+typedef struct Number {
 
     double value;
 
-} NumberNode;
+} Number;
 
-Number ast_number_create(double value);
+Number *ast_number_create(double value);
 
-void ast_number_cleanup(Number number);
+void ast_number_cleanup(Number *number);
 
 /* Variable AST Node */
-typedef struct variableNode {
+typedef struct Variable {
 
     char *name;
 
-} VariableNode;
+} Variable;
 
-Variable ast_variable_create(char *name);
+Variable *ast_variable_create(char *name);
 
-void ast_number_cleanup(Number number);
+void ast_variable_cleanup(Variable *variable);
+
+/* Application AST Node */
+typedef struct Application {
+
+    char *name;
+
+    List *args;
+
+} Application;
+
+Application *ast_application_create(char *name, List *args);
+
+void ast_application_cleanup(Application *application);
+
+/* Expression AST Node */
+typedef enum {APPLICATIONEXPR, NUMBEREXPR, VARIABLEEXPR} ExpressionType;
+
+typedef struct Expression {
+
+    ExpressionType expressionType;
+
+    union {
+        Application *application;
+        Number *number;
+        Variable *variable;
+    };
+
+} Expression;
+
+Expression *ast_expression_create();
+
+void ast_expression_cleanup(Expression *expression);
+
+Expression *ast_application_expression(Application *application);
+
+Expression *ast_number_expression(Number *number);
+
+Expression *ast_variable_expression(Variable *variable);
+
+
+/* Variable Definition AST Node */
+typedef struct VarDefinition {
+
+    char *name;
+
+    Expression *expression;
+
+} VarDefinition;
+
+VarDefinition *ast_vardef_create(char *name, Expression *expression);
+
+void ast_vardef_cleanup(VarDefinition *vardef);
+
+
+/* Element AST Node */
+typedef enum {VARDEFINITIONEL, APPLICATIONEL} ElementType;
+
+typedef struct Element {
+
+    ElementType elementType;
+
+    union {
+        Application   *application;
+        VarDefinition *varDefinition;
+    };
+
+} Element;
+
+Element *ast_element_create();
+
+void ast_element_cleanup(Element *element);
+
+Element *ast_application_element(Application *application);
+
+Element *ast_vardefinition_element(VarDefinition *vardefinition);
+
+
+/* Block AST Node */
+typedef struct Block {
+
+    List *elements;
+
+} Block;
+
+Block *ast_block_create(List *nodes);
+
+void ast_block_cleanup(Block *block);
+
 
 #endif

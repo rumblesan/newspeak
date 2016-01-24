@@ -11,22 +11,20 @@ void indent(int i) {
     printf("%*s", i, " ");
 }
 
-void ast_print(Block block) {
+void ast_print(Block *block) {
     ast_block_print(block, 0);
 }
 
-void ast_block_print(Block block, int indentation) {
+void ast_block_print(Block *block, int indentation) {
     indent(indentation);
-    printf("AST Block with %d elements\n", list_length(block->elements));
-    List e = block->elements;
+    printf("AST Block with %d elements\n", list_count(block->elements));
 
-    while (!list_is_empty(e)) {
-        ast_element_print((Element)list_head(e), indentation + DEPTH);
-        e = list_tail(e);
+    LIST_FOREACH(block->elements, first, next, cur) {
+        ast_element_print(cur->value, indentation + DEPTH);
     }
 }
 
-void ast_element_print(Element element, int indentation) {
+void ast_element_print(Element *element, int indentation) {
     switch(element->elementType) {
         case VARDEFINITIONEL:
             ast_vardef_print(element->varDefinition, indentation + DEPTH);
@@ -37,29 +35,27 @@ void ast_element_print(Element element, int indentation) {
     }
 }
 
-void ast_vardef_print(VarDefinition vardef, int indentation) {
+void ast_vardef_print(VarDefinition *vardef, int indentation) {
     indent(indentation);
     printf("Var Definition: %s\n", vardef->name);
     ast_expression_print(vardef->expression, indentation + DEPTH);
 }
 
-void ast_application_print(Application application, int indentation) {
+void ast_application_print(Application *application, int indentation) {
     indent(indentation);
     printf("Application: %s\n", application->name);
     ast_arg_list_print(application->args, indentation + DEPTH);
 }
 
-void ast_arg_list_print(List argList, int indentation) {
-    List args = argList;
+void ast_arg_list_print(List *args, int indentation) {
     indent(indentation);
-    printf("%d args\n", list_length(args));
-    while (!list_is_empty(args)) {
-        ast_expression_print((Expression)list_head(args), indentation + DEPTH);
-        args = list_tail(args);
+    printf("%d args\n", list_count(args));
+    LIST_FOREACH(args, first, next, cur) {
+        ast_expression_print(cur->value, indentation + DEPTH);
     }
 }
 
-void ast_expression_print(Expression expression, int indentation) {
+void ast_expression_print(Expression *expression, int indentation) {
     indent(indentation);
     printf("Expression\n");
     switch(expression->expressionType) {
@@ -75,13 +71,13 @@ void ast_expression_print(Expression expression, int indentation) {
     }
 }
 
-void ast_number_print(Number number, int indentation) {
+void ast_number_print(Number *number, int indentation) {
     indent(indentation);
     printf("Number: %f\n", number->value);
 
 }
 
-void ast_variable_print(Variable variable, int indentation) {
+void ast_variable_print(Variable *variable, int indentation) {
     indent(indentation);
     printf("Variable: %s\n", variable->name);
 }
