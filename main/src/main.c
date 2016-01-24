@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
 
-    Block ast;
+    Block *ast;
 
     int parseResult = parse(&ast);
 
@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
         printf("Error during parsing");
     } else {
         printf("Parsed");
+        ast_print(ast);
     }
 
     return parseResult;
