@@ -1,11 +1,12 @@
 #ifndef __SPEAK_VM_H__
 #define __SPEAK_VM_H__
 
-#include "stack.h"
-#include "darray.h"
+#include "bclib/stack.h"
+#include "bclib/darray.h"
 
 typedef enum {
     NOP,   // NoOperation
+    HLT,   // Halt
     ADD,   // Add top two elements of stack
     SUB,   // Subtract top two elements of stack
     MUL,   // Multiply top two elements of stack
@@ -13,7 +14,7 @@ typedef enum {
     MOD,   // Modulus top two elements of stack
     POW,   // Exponent top two elements of stack
     UNM,   // Unary Minus
-    EQ,    // Equality
+    EQL,   // Equality
     LT,    // Less than test
     LE,    // Less than or equal test
     EQ,    // Equality
@@ -36,9 +37,9 @@ typedef struct SpeakVM {
 
 } SpeakVM;
 
-SpeakVM *speak_vm_create(DArray program);
-void speak_vm_destroy();
+SpeakVM *speak_vm_create(DArray *program);
+void speak_vm_destroy(SpeakVM *vm);
 
-int speak_vm_run(SpeakVM vm);
+int speak_vm_run(SpeakVM *vm);
 
 #endif

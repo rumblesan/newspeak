@@ -1,26 +1,22 @@
 #include <stdlib.h>
 
-#include "stack.h"
-#include "darray.h"
-#include "dbg.h"
+#include "speakvm.h"
 
-SpeakVM *speak_vm_create(DArray program) {
+#include "bclib/stack.h"
+#include "bclib/darray.h"
+#include "bclib/dbg.h"
 
+SpeakVM *speak_vm_create(DArray *program) {
+
+    // TODO memory checking here
     SpeakVM *vm = malloc(sizeof(SpeakVM));
-    check_mem(vm);
     Stack *call_stack = stack_create();
-    check_mem(call_stack);
 
     vm->counter = 0;
     vm->call_stack = call_stack;
     vm->program = program;
 
     return vm;
-error:
-    if (call_stack) free(call_stack);
-    if (vm) free(vm);
-
-    return NULL;
 }
 
 void speak_vm_destroy(SpeakVM *vm) {
@@ -30,4 +26,9 @@ void speak_vm_destroy(SpeakVM *vm) {
         free(vm);
     }
 }
+
+int speak_fm_run(SpeakVM *vm) {
+    return 0;
+}
+
 

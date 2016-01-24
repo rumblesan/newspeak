@@ -1,11 +1,12 @@
 #include "minunit.h"
+
 #include "speakvm.h"
-#include "darray.h"
+#include "bclib/darray.h"
 
 static SpeakVM *vm;
 
 char *test_create() {
-    DArray *program = darray_create();
+    DArray *program = darray_create(sizeof(int), 100);
     mu_assert(program != NULL, "darray_create failed");
 
     vm = speak_vm_create(program);
